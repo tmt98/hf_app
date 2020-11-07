@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "722761809986",
+    "firebase_url": "https://luanvancntt-firebase.firebaseio.com",
+    "project_id": "luanvancntt-firebase",
+    "storage_bucket": "luanvancntt-firebase.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:722761809986:android:2ed6891ed216bdc1f86ddb",
+        "android_client_info": {
+          "package_name": "com.mobileapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "722761809986-evsr3fipp2l7ra5tgue9c0066vgnrrsa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0B_1BQKzWAJxm6UE_JbeDdgX1dv2w4oA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "722761809986-evsr3fipp2l7ra5tgue9c0066vgnrrsa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
