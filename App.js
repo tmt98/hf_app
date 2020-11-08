@@ -7,7 +7,7 @@ import {Provider as PaperProvider} from 'react-native-paper';
 import {Provider as StoreProvider} from 'react-redux';
 import store from './src/redux/store';
 
-import Navigation from './src/Navigation';
+import Navigation from './src/components/Navigation';
 
 const App = () => {
   return (

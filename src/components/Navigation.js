@@ -5,12 +5,16 @@ import {Button as ButtonPaper, Avatar} from 'react-native-paper';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
-import Login from './Login';
 import Main from './Main';
-import SignUp from './SignUp';
 
-import MyDeviceDetail from './Device/MyDeviceDetail';
-import ManagerDevice from './Device/ManagerDevice';
+import Login from './Authentication/Login';
+import SignUp from './Authentication/SignUp';
+
+import MyDeviceDetail from './MyDevice/MyDeviceDetail';
+import ManagerDevice from './MyDevice/ManagerDevice';
+import ManagerDeviceForm from './MyDevice/ManagerDeviceForm';
+
+import SharedDeviceDetail from './SharedDevice/SharedDeviceDetail';
 
 import auth from '@react-native-firebase/auth';
 
@@ -22,6 +26,8 @@ const userScreens = {
   Main: Main,
   MyDeviceDetail: MyDeviceDetail,
   ManagerDevice: ManagerDevice,
+  ManagerDeviceForm: ManagerDeviceForm,
+  SharedDeviceDetail: SharedDeviceDetail,
 };
 const Stack = createStackNavigator();
 const Navigation = () => {

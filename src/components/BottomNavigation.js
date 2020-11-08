@@ -1,8 +1,8 @@
 import React, {useState} from 'react';
 import {BottomNavigation} from 'react-native-paper';
 
-import MyDevice from './Device/MyDevice';
-import SharedDevice from './Device/SharedDevice';
+import MyDevice from './MyDevice/MyDevice';
+import SharedDevice from './SharedDevice/SharedDevice';
 import Profile from './Profile/Profile';
 
 const BottomNavigationG = () => {
