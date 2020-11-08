@@ -16,6 +16,7 @@
     "@react-navigation/native": "^5.8.6",
     "@react-navigation/stack": "^5.12.3",
     "@reduxjs/toolkit": "^1.4.0",
+    "axios": "^0.21.0",
     "link": "^0.1.5",
     "lodash.remove": "^4.7.0",
     "react": "16.13.1",
