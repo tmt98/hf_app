@@ -166,7 +166,10 @@ const MyDeviceDetail = ({route}) => {
             icon="account-tie"
             mode="contained"
             onPress={() => {
-              navigation.navigate('ManagerDevice');
+              navigation.navigate('ManagerDevice', {
+                idsensor: idsensor,
+                sensor: sensor,
+              });
             }}>
             Manager
           </Button>

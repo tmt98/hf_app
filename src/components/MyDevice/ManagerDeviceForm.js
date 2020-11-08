@@ -2,7 +2,10 @@ import React, {useEffect, useState} from 'react';
 import {View} from 'react-native';
 import {Switch, TextInput, Text, Button} from 'react-native-paper';
 
-const ManagerDeviceForm = () => {
+const ManagerDeviceForm = ({route}) => {
+  // Test case
+  //
+
   const [iduser, setIdUser] = useState('');
   const [ispHSwitchOn, setIspHSwitchOn] = useState(false);
   const [isTempSwitchOn, setTempIsSwitchOn] = useState(false);
@@ -12,9 +15,30 @@ const ManagerDeviceForm = () => {
   const onHumidityToggleSwitch = () =>
     setHumidityIsSwitchOn(!isHumiditySwitchOn);
 
+  useEffect(() => {
+    if (route.params.user) {
+      setIdUser(route.params.user);
+      route.params.listshare.map((key, index) => {
+        switch (key) {
+          case 'ph':
+            setIspHSwitchOn(true);
+            break;
+          case 'temperature':
+            setTempIsSwitchOn(true);
+            break;
+          case 'humidity':
+            setHumidityIsSwitchOn(true);
+            break;
+        }
+      });
+    }
+  }, []);
+
   return (
     <View style={{padding: 60}}>
-      <Button icon="account">Add User To Device</Button>
+      <Button icon="account">
+        {route.params.user ? 'Edit Permission' : 'Add User To Device'}
+      </Button>
       <TextInput
         label="ID User"
         value={iduser}
