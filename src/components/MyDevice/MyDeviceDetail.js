@@ -3,7 +3,9 @@ import {View, Dimensions, ScrollView} from 'react-native';
 import {Button, Card, Avatar} from 'react-native-paper';
 import {LineChart} from 'react-native-chart-kit';
 import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
 
+// Fake data
 const fake_sensor1 = [
   {id: 'ph', name: 'pH', icon: 'ruler', unit: 'pH'},
   {
@@ -36,111 +38,160 @@ const fake_sensor4 = [
   {id: 'ph', name: 'pH', icon: 'ruler', unit: 'pH'},
   {id: 'humidity', name: 'Humidity', icon: 'cloud', unit: '%'},
 ];
+// -->
 
 const MyDeviceDetail = ({route}) => {
+  const [data, setData] = useState();
   const navigation = useNavigation();
   const {idsensor, sensor} = route.params;
 
+  // fake choose sensor
   var useSensor;
   if (sensor === 'sensor1') useSensor = fake_sensor1;
   else if (sensor === 'sensor2') useSensor = fake_sensor2;
   else if (sensor === 'sensor3') useSensor = fake_sensor3;
   else useSensor = fake_sensor4;
+  //
+
+  useEffect(() => {
+    const getDataSensor = async () => {
+      const result = await axios(
+        'http://192.168.1.3:9999/api/device/mydevice/detail',
+      ).catch((err) => {
+        console.log(err);
+      });
+      if (result === undefined) {
+        setData({});
+      } else {
+        setData(result.data);
+        // console.log(data);
+      }
+    };
+    getDataSensor();
+  }, []);
 
   const ListSensor = useSensor.map((sensor, index) => {
-    return (
-      <View key={index}>
-        <Button icon={sensor.icon}>{sensor.name}</Button>
-        <LineChart
-          data={{
-            labels: [
-              '11:10',
-              '11:25',
-              '11:40',
-              '11:55',
-              '12:10',
-              '12:25',
-              '11:10',
-              '11:25',
-              '11:40',
-              '11:55',
-              '12:10',
-              '12:25',
-              '11:10',
-              '11:25',
-              '11:40',
-              '11:55',
-              '12:10',
-              '12:25',
-              '11:10',
-              '11:25',
-              '11:40',
-              '11:55',
-              '12:10',
-              '12:25',
-            ],
-            datasets: [
-              {
-                data: [
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                  Math.random() * 100,
-                ],
+    var chartData;
+    if (data != undefined) {
+      switch (sensor.id) {
+        case 'ph':
+          chartData = {
+            labels: data.payload.time,
+            datasets: {
+              data: data.payload.ph,
+            },
+          };
+        case 'temperature':
+          chartData = {
+            labels: data.payload.time,
+            datasets: {
+              data: data.payload.temperature,
+            },
+          };
+        case 'humidity':
+          chartData = {
+            labels: data.payload.time,
+            datasets: {
+              data: data.payload.humidity,
+            },
+          };
+      }
+      console.log(chartData);
+      return (
+        <View key={index}>
+          <Button icon={sensor.icon}>{sensor.name}</Button>
+          <LineChart
+            data={{
+              labels: [
+                '11:10',
+                '11:25',
+                '11:40',
+                '11:55',
+                '12:10',
+                '12:25',
+                '11:10',
+                '11:25',
+                '11:40',
+                '11:55',
+                '12:10',
+                '12:25',
+                '11:10',
+                '11:25',
+                '11:40',
+                '11:55',
+                '12:10',
+                '12:25',
+                '11:10',
+                '11:25',
+                '11:40',
+                '11:55',
+                '12:10',
+                '12:25',
+              ],
+              datasets: [
+                {
+                  data: [
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                    Math.random() * 100,
+                  ],
+                },
+              ],
+            }}
+            width={Dimensions.get('window').width} // from react-native
+            height={220}
+            yAxisLabel=""
+            yAxisSuffix={sensor.unit}
+            yAxisInterval={1} // optional, defaults to 1
+            verticalLabelRotation={50}
+            fromZero={true}
+            yLabelsOffset={1}
+            chartConfig={{
+              backgroundColor: '#F94C7A',
+              backgroundGradientFrom: '#F94C7A',
+              backgroundGradientTo: '#F94C7A',
+              decimalPlaces: 2, // optional, defaults to 2dp
+              color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+              labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+              style: {
+                borderRadius: 16,
               },
-            ],
-          }}
-          width={Dimensions.get('window').width} // from react-native
-          height={220}
-          yAxisLabel=""
-          yAxisSuffix={sensor.unit}
-          yAxisInterval={1} // optional, defaults to 1
-          verticalLabelRotation={50}
-          fromZero={true}
-          yLabelsOffset={1}
-          chartConfig={{
-            backgroundColor: '#F94C7A',
-            backgroundGradientFrom: '#F94C7A',
-            backgroundGradientTo: '#F94C7A',
-            decimalPlaces: 2, // optional, defaults to 2dp
-            color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
-            style: {
-              borderRadius: 16,
-            },
-            propsForDots: {
-              r: '3',
-              strokeWidth: '2',
-              stroke: '#ffa726',
-            },
-          }}
-          style={{
-            marginVertical: 0,
-            borderRadius: 0,
-          }}
-        />
-      </View>
-    );
+              propsForDots: {
+                r: '3',
+                strokeWidth: '2',
+                stroke: '#ffa726',
+              },
+            }}
+            style={{
+              marginVertical: 0,
+              borderRadius: 0,
+            }}
+          />
+        </View>
+      );
+    }
+    return <View key="index"></View>;
   });
 
   return (
@@ -156,7 +207,7 @@ const MyDeviceDetail = ({route}) => {
           </View>
           <View style={{width: '50%'}}>
             <Card.Title
-              title="100%"
+              title={data === undefined ? 'NONE' : data.battery}
               left={() => <Avatar.Icon size={40} icon="battery" />}
             />
           </View>
