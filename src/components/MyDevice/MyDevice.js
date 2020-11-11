@@ -4,6 +4,10 @@ import {Button} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 
+// GET Environment
+import env from '../../environment/environment';
+const url = env.BASE_URL;
+
 import auth from '@react-native-firebase/auth';
 import {List} from 'react-native-paper';
 
@@ -25,10 +29,9 @@ const MyDevice = () => {
   const onRefresh = useCallback(() => {
     setRefreshing(true);
     wait(2000).then(() => {
+      let link = url + '/api/device/getmydevice';
       (async function () {
-        const result = await axios(
-          'http://192.168.1.3:9999/api/device/getmydevice',
-        ).catch((err) => {
+        const result = await axios(link).catch((err) => {
           // console.log(err);
         });
         if (result === undefined) {
@@ -41,9 +44,8 @@ const MyDevice = () => {
 
   useEffect(() => {
     (async function () {
-      const result = await axios(
-        'http://192.168.1.3:9999/api/device/getmydevice',
-      ).catch((err) => {
+      let link = url + '/api/device/getmydevice';
+      const result = await axios(link).catch((err) => {
         // console.log(err);
       });
       if (result === undefined) {

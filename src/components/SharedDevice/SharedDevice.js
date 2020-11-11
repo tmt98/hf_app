@@ -4,6 +4,10 @@ import {Button} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 
+// GET Environment
+import env from '../../environment/environment';
+const url = env.BASE_URL;
+
 import {List} from 'react-native-paper';
 
 // const data = [
@@ -27,11 +31,11 @@ const SharedDevice = () => {
     setRefreshing(true);
     wait(2000).then(() => {
       (async function () {
-        const result = await axios(
-          'http://192.168.1.3:9999/api/device/getshareddevice',
-        ).catch((err) => {
-          // console.log(err);
-        });
+        const result = await axios(url + '/api/device/getshareddevice').catch(
+          (err) => {
+            // console.log(err);
+          },
+        );
         if (result === undefined) {
           setData([]);
         } else setData(result.data);
@@ -42,11 +46,11 @@ const SharedDevice = () => {
 
   useEffect(() => {
     (async function () {
-      const result = await axios(
-        'http://192.168.1.3:9999/api/device/getshareddevice',
-      ).catch((err) => {
-        // console.log(err);
-      });
+      const result = await axios(url + '/api/device/getshareddevice').catch(
+        (err) => {
+          // console.log(err);
+        },
+      );
       if (result === undefined) {
         setData([]);
       } else setData(result.data);

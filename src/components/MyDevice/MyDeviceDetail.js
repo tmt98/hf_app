@@ -5,6 +5,10 @@ import {LineChart} from 'react-native-chart-kit';
 import {useNavigation} from '@react-navigation/native';
 import axios from 'axios';
 
+// GET Environment
+import env from '../../environment/environment';
+const url = env.BASE_URL;
+
 // Fake data
 const fake_sensor1 = [
   {id: 'ph', name: 'pH', icon: 'ruler', unit: 'pH'},
@@ -55,11 +59,11 @@ const MyDeviceDetail = ({route}) => {
 
   useEffect(() => {
     const getDataSensor = async () => {
-      const result = await axios(
-        'http://192.168.1.3:9999/api/device/mydevice/detail',
-      ).catch((err) => {
-        console.log(err);
-      });
+      const result = await axios(url + '/api/device/mydevice/detail').catch(
+        (err) => {
+          console.log(err);
+        },
+      );
       if (result === undefined) {
         setData({});
       } else {
@@ -97,65 +101,18 @@ const MyDeviceDetail = ({route}) => {
           };
       }
       console.log(chartData);
+      var labels = chartData.labels;
+      var data_in_datasets = chartData.datasets.data;
+
       return (
         <View key={index}>
           <Button icon={sensor.icon}>{sensor.name}</Button>
           <LineChart
             data={{
-              labels: [
-                '11:10',
-                '11:25',
-                '11:40',
-                '11:55',
-                '12:10',
-                '12:25',
-                '11:10',
-                '11:25',
-                '11:40',
-                '11:55',
-                '12:10',
-                '12:25',
-                '11:10',
-                '11:25',
-                '11:40',
-                '11:55',
-                '12:10',
-                '12:25',
-                '11:10',
-                '11:25',
-                '11:40',
-                '11:55',
-                '12:10',
-                '12:25',
-              ],
+              labels: labels,
               datasets: [
                 {
-                  data: [
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                    Math.random() * 100,
-                  ],
+                  data: data_in_datasets,
                 },
               ],
             }}
@@ -190,8 +147,9 @@ const MyDeviceDetail = ({route}) => {
           />
         </View>
       );
+    } else {
+      return <View key={index}></View>;
     }
-    return <View key="index"></View>;
   });
 
   return (
@@ -207,7 +165,9 @@ const MyDeviceDetail = ({route}) => {
           </View>
           <View style={{width: '50%'}}>
             <Card.Title
-              title={data === undefined ? 'NONE' : data.battery}
+              title={
+                data === undefined ? 'NONE' : Math.ceil(data.battery) + '%'
+              }
               left={() => <Avatar.Icon size={40} icon="battery" />}
             />
           </View>

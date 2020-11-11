@@ -1,7 +1,12 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View} from 'react-native';
 import {Card, Avatar, List, Button} from 'react-native-paper';
 import {useNavigation} from '@react-navigation/native';
+import axios from 'axios';
+
+// GET Environment
+import env from '../../environment/environment';
+const url = env.BASE_URL;
 
 // Fake Data
 const fake_data1 = [
@@ -44,11 +49,25 @@ const fake_data4 = [
   //   sensor: ['humidity', 'ph', 'temperature'],
   // },
 ];
-//
 
 const ManagerDevice = ({route}) => {
+  const [data, setData] = useState([]);
   const navigation = useNavigation();
   const {idsensor, sensor} = route.params;
+
+  useEffect(() => {
+    const getG = async () => {
+      const result = await axios(url + '/api/device/manager').catch((err) => {
+        console.log(err);
+      });
+      if (result === undefined) {
+        setData([]);
+      } else {
+        setData(result.data);
+      }
+    };
+    getG();
+  }, []);
 
   var useUserShared;
   if (sensor === 'sensor1') useUserShared = fake_data1;
@@ -57,7 +76,7 @@ const ManagerDevice = ({route}) => {
   else useUserShared = fake_data4;
 
   // console.log(useUserShared.length);
-  const ListUserShared = useUserShared.map((user, index) => {
+  const ListUserShared = data.map((user, index) => {
     return (
       <List.Item
         key={index}
