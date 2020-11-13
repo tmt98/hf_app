@@ -13,6 +13,7 @@ import SignUp from './Authentication/SignUp';
 import MyDeviceDetail from './MyDevice/MyDeviceDetail';
 import ManagerDevice from './MyDevice/ManagerDevice';
 import ManagerDeviceForm from './MyDevice/ManagerDeviceForm';
+import MyDeviceStatistic from './MyDevice/MyDeviceStatistic';
 
 import SharedDeviceDetail from './SharedDevice/SharedDeviceDetail';
 
@@ -28,6 +29,7 @@ const userScreens = {
   ManagerDevice: ManagerDevice,
   ManagerDeviceForm: ManagerDeviceForm,
   SharedDeviceDetail: SharedDeviceDetail,
+  MyDeviceStatistic: MyDeviceStatistic,
 };
 const Stack = createStackNavigator();
 const Navigation = () => {

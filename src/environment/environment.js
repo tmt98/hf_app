@@ -1,6 +1,8 @@
+const ip = '192.168.1.17';
+const url = `http://${ip}:9999`;
 var _Environments = {
-  production: {BASE_URL: 'http://10.42.0.52:9999'},
-  development: {BASE_URL: 'http://10.42.0.52:9999'},
+  production: {BASE_URL: url},
+  development: {BASE_URL: url},
 };
 
 const getEnvironment = () => {

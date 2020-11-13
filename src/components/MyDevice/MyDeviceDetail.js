@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Dimensions, ScrollView} from 'react-native';
+import {View, Dimensions, ScrollView, StyleSheet} from 'react-native';
 import {Button, Card, Avatar} from 'react-native-paper';
 import {LineChart} from 'react-native-chart-kit';
 import {useNavigation} from '@react-navigation/native';
@@ -172,23 +172,56 @@ const MyDeviceDetail = ({route}) => {
             />
           </View>
         </View>
-        <View>
-          <Button
-            icon="account-tie"
-            mode="contained"
-            onPress={() => {
-              navigation.navigate('ManagerDevice', {
-                idsensor: idsensor,
-                sensor: sensor,
-              });
-            }}>
-            Manager
-          </Button>
+        <View style={styles.container2c}>
+          <View style={styles.itemW50}>
+            <Button
+              icon="account-tie"
+              mode="contained"
+              style={styles.itempM3}
+              onPress={() => {
+                navigation.navigate('ManagerDevice', {
+                  idsensor: idsensor,
+                  sensor: sensor,
+                });
+              }}>
+              Manager
+            </Button>
+          </View>
+          <View style={styles.itemW50}>
+            <Button
+              icon="google-analytics"
+              mode="contained"
+              color="red"
+              style={styles.itempM3}
+              onPress={() => {
+                navigation.navigate('MyDeviceStatistic', {
+                  idsensor: idsensor,
+                  sensor: sensor,
+                });
+              }}>
+              Statistic
+            </Button>
+          </View>
         </View>
         <View>{ListSensor}</View>
       </ScrollView>
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  container2c: {
+    flex: 1,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+  },
+  itemW50: {
+    width: '50%',
+  },
+  itempM3: {
+    margin: 3,
+  },
+});
 
 export default MyDeviceDetail;
